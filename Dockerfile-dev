@@ -1,0 +1,13 @@
+FROM golang
+
+# install fresh (golang rebuilder on file change)
+RUN go get -u github.com/sc7639/fresh
+
+# create app dir
+RUN mkdir -p /go/src/app/ /go/src/tmp
+
+VOLUME /go/src/app
+WORKDIR /go/src/app
+EXPOSE 8080
+
+CMD ["fresh", "-c", "fresh.conf"]

@@ -1,0 +1,25 @@
+{
+  "name": "pygmy-hedgehog-rehoming",
+  "version": "0.0.1",
+  "description": "African Pygmy Hedgehog Rehoming Website",
+  "main": "main.go",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "pygmy-hedgehog-rehoming"
+  },
+  "keywords": [
+    "hedgehog",
+    "reghoming"
+  ],
+  "author": "Scott Crossan",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "promise-polyfill": "^6.0.2",
+    "uikit": "^2.27.3",
+    "whatwg-fetch": "^2.0.3"
+  }
+}
