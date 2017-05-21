@@ -20,15 +20,20 @@ func init() {
 
 const appRoot = "/go/src/app/"
 const templateFolder = appRoot + "/template"
-const header = templateFolder + "/header.html"
-const footer = templateFolder + "/footer.html"
+const layout = templateFolder + "/_layout.html"
 
 // Render pased template file
 func renderTemplate(w http.ResponseWriter, tmpl string) {
-	tmpl = filepath.Join(templateFolder, tmpl+".html")
-	t, err := template.ParseFiles(tmpl, footer, header)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	tmpl = filepath.Join(templateFolder, "block", tmpl+".html")
+	t, err := template.ParseFiles(tmpl, layout)
+	if err != nil { // If there was an error parsing the templates send an error back to the client
+		httpError := err.Error()
+		if APP_ENV != "dev" {
+			httpError = "Sorry, there was an error"
+		}
+
+		http.Error(w, httpError, http.StatusInternalServerError)
+		return
 	}
 
 	err = t.Execute(w, nil)
@@ -41,7 +46,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
 		renderTemplate(w, "index")
 	} else {
-		http.NotFound(w, r)
+		template := r.URL.Path[1:]
+		renderTemplate(w, template)
 	}
 }
 
@@ -57,7 +63,7 @@ func main() {
 		// Create static content handlers
 		var staticPaths = map[string]string{
 			"/js/":     "js/",
-			"/css":     "css/",
+			"/css/":    "css/",
 			"/images/": "images/",
 			"/fonts/":  "fonts/",
 		}

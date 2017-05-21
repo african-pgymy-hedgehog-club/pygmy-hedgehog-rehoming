@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{template "title"}}</title>
+
+        <script src="/js/jquery.min.js" charset="utf-8"></script>
+        <script src="/js/promise.min.js" charset="utf-8"></script>
+        <script src="/js/fetch.min.js" charset="utf-8"></script>
+        <script src="/js/uikit.min.js" charset="utf-8"></script>
+        <script src="http://localhost:35732/livereload.js" charset="utf-8"></script>
+
+        <link rel="stylesheet" href="/css/uikit.almost-flat.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+
+        {{block "scripts" .}}{{end}}
+    </head>
+    <body>
+
+        <div id="main" class="uk-grid uk-width-1-1 uk-margin-top">
+            <div class="uk-width-1-10 uk-margin-large-right"></div>
+            <div class="uk-width-8-10 uk-grid">
+                <div id="header" class="uk-width-1-1 uk-grid">
+                    <div class='uk-float-left uk-h3 uk-width-2-6'>
+                        Pygmy Hedgehog Rehoming
+                    </div>
+
+                    <div class="uk-width-4-6" id="nav">
+                        {{template "block/nav"}}
+                    </div>
+                    {{block "heading" .}}{{end}}
+                </div>
+
+            <div id="page-content" class="uk-width-1-1 uk-grid">
+                {{template "body"}}
+            </div>
+        </div>
+        <div class="uk-width-1-10"></div>
+    </body>
+</html>

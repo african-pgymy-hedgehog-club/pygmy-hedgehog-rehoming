@@ -21,5 +21,9 @@
     "promise-polyfill": "^6.0.2",
     "uikit": "^2.27.3",
     "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0"
   }
 }
