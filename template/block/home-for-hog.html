@@ -1,0 +1,85 @@
+{{define "title"}}Pygmy Hedgehog Rehoming{{end}}
+{{define "color"}}heading-background{{end}}
+{{define "scripts"}}
+    <script src="js/form-validator.js" charset="utf-8"></script>
+    <script src="js/promise.min.js" charset="utf-8"></script>
+    <script src="js/fetch.min.js" charset="utf-8"></script>
+    <script src="js/form.js" charset="utf-8"></script>
+    <script src="js/components/tooltip.min.js" charset="utf-8"></script>
+    <script src="js/components/notify.min.js" charset="utf-8"></script>
+{{end}}
+{{define "styles"}}
+    <link rel="stylesheet" href="css/components/tooltip.almost-flat.min.css" />
+    <link rel="stylesheet" href="css/components/notify.almost-flat.min.css" />
+{{end}}
+
+{{define "heading"}}
+<div class="uk-text-center uk-width-1-1" id="heading">
+    Find a Home For Your Hog
+</div>
+{{end}}
+
+{{define "body"}}
+    <form class="uk-form uk-form-horizontal" action="api/home-for-hog">
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Your Name</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='name' required />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Address</label>
+            <div class='uk-form-controls'>
+                <textarea name="address" rows="4" cols="22" required></textarea>
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Email</label>
+            <div class='uk-form-controls'>
+                <input type='email' name='email' required />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Contact Number</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='number' required />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Hedgehog Name</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='hedgehog_name' required />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Hedgehog Age</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='hedgehog_age' required/>
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Hedgehog Colour</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='hedgehog_colour' />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Any Additional Information</label>
+            <div class='uk-form-controls'>
+                <textarea name="additional_info" rows="6" cols="40"></textarea>
+            </div>
+        </div>
+
+        <div class="uk-margin-top">
+            <button class="uk-button uk-button-danger uk-float-left" id="reset">Reset</button>
+            <button class="uk-button uk-button-success uk-float-right" id="submit">Submit</button>
+        </div>
+    </form>
+{{end}}

@@ -9,32 +9,46 @@
         <script src="/js/fetch.min.js" charset="utf-8"></script>
         <script src="/js/uikit.min.js" charset="utf-8"></script>
         <script src="http://localhost:35732/livereload.js" charset="utf-8"></script>
+        {{block "scripts" .}}{{end}}
 
         <link rel="stylesheet" href="/css/uikit.almost-flat.min.css">
         <link rel="stylesheet" href="/css/style.css">
+        {{block "styles" .}}{{end}}
 
-        {{block "scripts" .}}{{end}}
     </head>
     <body>
+        <div class="uk-width-1-1 {{block "color" .}}{{end}}" id="top">
+            <div class="uk-grid">
+                <div class="uk-width-1-10 uk-margin-large-right"></div>
+                <div class="uk-width-8-10 uk-grid">
+                    <div id="header" class="uk-width-1-1 uk-grid">
+                        <div class='uk-float-left uk-h3 uk-width-2-6'>
+                            Pygmy Hedgehog Rehoming
+                        </div>
 
-        <div id="main" class="uk-grid uk-width-1-1 uk-margin-top">
-            <div class="uk-width-1-10 uk-margin-large-right"></div>
-            <div class="uk-width-8-10 uk-grid">
-                <div id="header" class="uk-width-1-1 uk-grid">
-                    <div class='uk-float-left uk-h3 uk-width-2-6'>
-                        Pygmy Hedgehog Rehoming
+                        <div class="uk-width-4-6" id="nav">
+                            {{template "nav"}}
+                        </div>
+                        {{block "heading" .}}{{end}}
                     </div>
-
-                    <div class="uk-width-4-6" id="nav">
-                        {{template "block/nav"}}
-                    </div>
-                    {{block "heading" .}}{{end}}
                 </div>
-
-            <div id="page-content" class="uk-width-1-1 uk-grid">
-                {{template "body"}}
             </div>
         </div>
-        <div class="uk-width-1-10"></div>
+
+        <div class="uk-grid">
+            <div class="uk-width-1-10 uk-margin-large-right"></div>
+            <div class="uk-width-8-10 uk-grid">
+                <div id="page-content" class="uk-width-1-1 uk-grid">
+                    {{template "body"}}
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-margin-top uk-grid uk-with-1-1 footer-background" id="footer">
+            <div class="uk-width-1-10 margin-large-right"></div>
+            <div class="uk-width-8-10" id="content">
+                <a href="http://africanpygmyhedgehogclub.co.uk" target="_blank">African Pygmy Hedgehog Club</a>
+                <a class="uk-float-right" href="http://hedgehogregistry.co.uk" target="_blank">Hedgehog Registry</a>
+            </div>
     </body>
 </html>

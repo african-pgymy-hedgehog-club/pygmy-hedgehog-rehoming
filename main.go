@@ -2,9 +2,11 @@ package main
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type Page struct {
@@ -19,20 +21,28 @@ func init() {
 }
 
 const appRoot = "/go/src/app/"
-const templateFolder = appRoot + "/template"
-const layout = templateFolder + "/_layout.html"
+const templateFolder = appRoot + "template/"
+const nav = templateFolder + "/block/nav.html"
+const layout = templateFolder + "_layout.html"
+
+// Write error response to the client
+func clientError(w http.ResponseWriter, err error) {
+	httpError := err.Error()
+	if APP_ENV != "dev" {
+		httpError = "Sorry, there was an error"
+
+		log.Println(err.Error()) // Log error if it's not displayed to the client
+	}
+
+	http.Error(w, httpError, http.StatusInternalServerError)
+}
 
 // Render pased template file
 func renderTemplate(w http.ResponseWriter, tmpl string) {
 	tmpl = filepath.Join(templateFolder, "block", tmpl+".html")
-	t, err := template.ParseFiles(tmpl, layout)
-	if err != nil { // If there was an error parsing the templates send an error back to the client
-		httpError := err.Error()
-		if APP_ENV != "dev" {
-			httpError = "Sorry, there was an error"
-		}
-
-		http.Error(w, httpError, http.StatusInternalServerError)
+	t, err := template.ParseFiles(layout, nav, tmpl)
+	if err != nil {
+		clientError(w, err)
 		return
 	}
 
@@ -43,21 +53,20 @@ func renderTemplate(w http.ResponseWriter, tmpl string) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/" {
+	var p = r.URL.Path
+
+	if p == "/" {
 		renderTemplate(w, "index")
+	} else if strings.HasPrefix(p, "/api") {
+		apiHandler(w, r)
 	} else {
 		template := r.URL.Path[1:]
 		renderTemplate(w, template)
 	}
 }
 
-func mooHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Moo22"))
-}
-
 func main() {
 	http.HandleFunc("/", rootHandler)
-	http.HandleFunc("/moo", mooHandler)
 
 	if APP_ENV == "dev" { // Serve static content if app environment is dev (in production nginx will serve)
 		// Create static content handlers

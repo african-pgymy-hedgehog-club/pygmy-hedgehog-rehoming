@@ -1,7 +1,12 @@
 FROM golang
 
+# Install sendmail
+# RUN apt-get update && apt-get install sendmail -y
+# # Set FQDN
+# RUN line=$(head -n 1 /etc/hosts) && line2=$(echo $line | awk '{print $2}') && echo "$line $line2.localdomain" >> /etc/hosts
+
 # install fresh (golang rebuilder on file change)
-RUN go get -u github.com/sc7639/fresh
+RUN go get -u github.com/sc7639/fresh github.com/sc7639/sendmail
 
 # create app dir
 RUN mkdir -p /go/src/app/ /go/src/tmp

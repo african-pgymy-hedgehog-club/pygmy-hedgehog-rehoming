@@ -1,3 +1,7 @@
+div#top {
+    padding-top: 15px !important;
+}
+
 div#nav > nav > ul {
     margin: 0;
     padding: 0;
@@ -47,5 +51,27 @@ ol#nav > li > a {
 ol#nav > li > a:hover {
     opacity: 0.6;
     text-decoration: none;
+}
 
+div#header div#heading {
+    background-color: #e5fff7;
+    padding-top: 75px;
+    font-size: 40pt;
+    padding-bottom: 90px;
+}
+
+.heading-background, .footer-background {
+    background-color: #e5fff7;
+}
+
+div#page-content {
+    background-image: url("/images/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    padding: 10px;
+}
+
+div#footer div#content {
+    padding: 30px;
 }

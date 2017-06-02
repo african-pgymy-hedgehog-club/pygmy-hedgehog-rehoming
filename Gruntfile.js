@@ -8,10 +8,10 @@ module.exports = function (grunt) {
     			files: [
                     'css/*.css',
                     'js/*.js',
-                    'template/*.html'
+                    'template/**/*.html'
                 ],
 				options: {
-					livereload: 35731
+					livereload: 35732
 				}
             }
         }

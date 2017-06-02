@@ -1,0 +1,17 @@
+<table border="1" style="text-align: center;" cellpadding="4">
+    <tr>
+        <td colspan="2">
+            <h2>{{.Title}}</h2>
+        </td>
+    </tr>
+
+    {{range $_, $v := .Order}}
+        {{$fdVal := index $.FormData $v}}
+        {{if $fdVal }}
+            <tr>
+                <td>{{$v}}</td>
+                <td>{{$fdVal}}</td>
+            </tr>
+        {{end}}
+    {{end}}
+</table>
