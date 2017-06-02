@@ -6,9 +6,7 @@ WORKDIR /go/src/app
 RUN go get -u github.com/sc7639/sendmail
 
 # Add files
-ADD js/ js/
 ADD template/ template/
-ADD images/ images/
 ADD *.go ./
 
 # Build app and remove source files
