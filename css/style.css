@@ -1,3 +1,14 @@
+@font-face {
+    font-family: myron;
+    src: url('/fonts/Myron-Regular.otf');
+}
+
+body {
+    font-family: myron;
+    font-size: 14pt !important;
+    /*line-height: 1.4;*/
+}
+
 div#top {
     padding-top: 15px !important;
 }
@@ -15,7 +26,7 @@ div#nav > nav > ul > li {
 }
 
 div#nav > nav > ul > li > a {
-    font-size: 9pt !important;
+    font-size: 12pt !important;
 }
 
 div#nav > nav > ul > li > a:link, div#nav > nav > ul > li > a:visited {
@@ -34,7 +45,7 @@ div#header {
 
 ol#nav {
     text-align: left;
-    font-size: 13pt;
+    font-size: 15pt;
 }
 
 ol#nav > li {
@@ -44,7 +55,7 @@ ol#nav > li {
 }
 
 ol#nav > li > a {
-    font-size: 30pt;
+    font-size: 32pt;
     color: #000;
 }
 
@@ -56,7 +67,7 @@ ol#nav > li > a:hover {
 div#header div#heading {
     background-color: #e5fff7;
     padding-top: 75px;
-    font-size: 40pt;
+    font-size: 42pt;
     padding-bottom: 90px;
 }
 
@@ -74,4 +85,8 @@ div#page-content {
 
 div#footer div#content {
     padding: 30px;
+}
+
+.uk-tooltip-inner {
+    font-size: 11pt !important
 }
