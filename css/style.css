@@ -76,11 +76,12 @@ div#header div#heading {
 }
 
 div#page-content {
-    background-image: url("/images/background.png");
+    background-image: url("/images/background-transparent.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
     padding: 10px;
+    overflow: hidden;
 }
 
 div#footer div#content {
@@ -110,4 +111,8 @@ h3 {
 
 h4 {
     font-size: 18pt !important;
+}
+
+p {
+    margin-top: 15px !important;
 }
