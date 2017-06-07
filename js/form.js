@@ -7,7 +7,7 @@
 Error.prototype.toJSON = function() {
     var alt = {};
 
-    Object.getOwnPropertyNames(this).forEach((key) => {
+    Object.getOwnPropertyNames(this).forEach(function(key) {
         alt[key] = this[key];
     });
 
@@ -19,7 +19,7 @@ Error.prototype.toJSON = function() {
  * @param {object}
  * @return {Promise}
  */
-const logError = async (err) => {
+function logError(err) {
     let formData = new FormData();
     formData.append("error", JSON.stringify(err));
 
@@ -27,8 +27,10 @@ const logError = async (err) => {
         credentials: "same-origin",
         method: "POST",
         body: formData
-    }).catch(err => console.error(err));
-};
+    }).catch(function(err) {
+        console.error(err);
+    });
+}
 
 /**
  * Try to parse response as json if it fails catch the error and parse as text
@@ -36,17 +38,17 @@ const logError = async (err) => {
  * @throws {error}
  * @return {Promise}
  */
-Response.prototype.jsonCatch = async function() {
-    return this.clone().json().catch(err => {
-        return this.text().then(async resErr => {
+Response.prototype.jsonCatch = function() {
+    return this.clone().json().catch(function(err) {
+        return this.text().then(function(resErr) {
             UIkit.notify(resErr, { status: "danger", timeout: 3500 });
 
-            await logError({ // Log error on the server
-                err,
-                resErr
+            return logError({ // Log error on the server
+                err: err,
+                resErr: resErr
+            }).then(function () {
+                throw err;
             });
-
-            throw err;
         });
     });
 };
@@ -55,58 +57,63 @@ Response.prototype.jsonCatch = async function() {
  * Empty form inputs
  * @param {object} form
  */
-const emptyForm = (form) => {
+function emptyForm(form) {
     form.find("input, textarea").val("");
-};
+}
 
 $(document).ready(function () {
-    $("form").submit(async function (e) { // On form submit send to api specified in the action attribute
+    $("form").submit(function (e) { // On form submit send to api specified in the action attribute
         e.preventDefault();
 
         let route = $(this).attr("action");
-        let [routeType] = route.split("/").slice(-1);
+        let routeType = route.split("/").slice(-1)[0];
         let formData = new FormData( $(this)[0] );
 
         let buttons = $(this).find("button");
 
         let message;
-        let messageTimeout = setTimeout(() => {
+        let messageTimeout = setTimeout(function() {
             message = UIkit.notify("Working to submit form... <i class='uk-icon-spinner uk-icon-spin'></i>", { status: "message", timeout: 0 });
         }, 1500);
         try {
             buttons.attr("disabled", true); // Disable form button
 
-            let response = await fetch(route, { // Async post the data to the backend api
+            fetch(route, { // Async post the data to the backend api
                 credentials: "same-origin",
                 method: "POST",
                 body: formData
-            });
+            }).then(function (response) {
+                return response.jsonCatch();
+            }).then(function (data) {
+                let success = data.success;
+                let error = data.error || null;
 
-            let {success, error} = await response.jsonCatch(); // Retrieve the response as json
+                if(message) {
+                    message.close();
+                }
+                clearTimeout(messageTimeout);
 
-            if(message) {
-                message.close();
-            }
-            clearTimeout(messageTimeout);
+                if(success) {
+                    if(routeType == "home-for-hog") {
+                        routeType = "Find a Home For Your Hog";
+                    } else if(routeType == "foster-carer") {
+                        routeType = "Foster Carers";
+                    }
 
-            if(success) {
-                if(routeType == "home-for-hog") {
-                    routeType = "Find a Home For Your Hog";
-                } else if(routeType == "foster-carer") {
-                    routeType = "Foster Carers";
+                    UIkit.notify("Successfully submitted " + routeType + " form", { status: "success", timeout: 0 });
+                    emptyForm( $(this) );
+                }
+                else if(error) {
+                    UIkit.notify(error, { status: "danger", timeout: 3500 });
+                }
+                else {
+                    UIkit.notify("Sorry, there was an error", { status: "danger", timeout: 3500 });
                 }
 
-                UIkit.notify(`Successfully submitted ${routeType} form`, { status: "success", timeout: 0 });
-                emptyForm( $(this) );
-            }
-            else if(error) {
-                UIkit.notify(error, { status: "danger", timeout: 3500 });
-            }
-            else {
-                UIkit.notify("Sorry, there was an error", { status: "danger", timeout: 3500 });
-            }
+                buttons.attr("disabled", false); // Enable form buttons
+            })
 
-            buttons.attr("disabled", false); // Enable form buttons
+
         }
         catch(err) {
             if(message) {
@@ -116,9 +123,10 @@ $(document).ready(function () {
 
             UIkit.notify("Sorry, there was an error", { status: "danger", timeout: 3500 });
 
-            await logError(err);
-            buttons.attr("disabled", false); // Enable form buttons
-            console.error(err);
+            logError(err).then(function() {
+                buttons.attr("disabled", false); // Enable form buttons
+                console.error(err);
+            });
         }
     });
 
