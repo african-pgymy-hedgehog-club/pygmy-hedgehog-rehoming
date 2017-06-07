@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -69,6 +70,16 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		fh, err := os.Open("images/favicon.ico")
+		defer fh.Close()
+		if err != nil {
+			clientError(w, err)
+			return
+		}
+
+		io.Copy(w, fh) // Send file to client
+	})
 	http.HandleFunc("/", rootHandler)
 
 	if APP_ENV == "dev" { // Serve static content if app environment is dev (in production nginx will serve)
