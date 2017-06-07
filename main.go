@@ -59,6 +59,9 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		renderTemplate(w, "index")
 	} else if strings.HasPrefix(p, "/api") {
 		apiHandler(w, r)
+	} else if strings.HasPrefix(p, "/adoption") { // Handle any fake adoption pages
+		var template = "adoption"
+		renderTemplate(w, template)
 	} else {
 		template := r.URL.Path[1:]
 		renderTemplate(w, template)

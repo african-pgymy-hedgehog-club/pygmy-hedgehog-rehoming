@@ -1,6 +1,6 @@
 "use strict";
 
-var state = history.state;
+var hedgehogName = window.location.pathname.split("/")[2] || null;
 
 function displayHedgehog(name) {
     $("div#" + name).removeClass("uk-hidden");
@@ -22,9 +22,12 @@ function stateChange(e) {
     }
 }
 
-$(document).ready(function () {
-    window.onpopstate = stateChange;
+window.onpopstate = stateChange;
 
+$(document).ready(function () {
+    if(hedgehogName) {
+        displayHedgehog(hedgehogName);
+    }
 
     $("a[name]").click(function (e) {
         e.preventDefault();
