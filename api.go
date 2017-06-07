@@ -76,7 +76,7 @@ func sendEmail(from, subject, body string) (bool, error) {
 	}
 
 	// Authenticate with smtp server
-	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", "7639sonicadv!", host)
+	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", "rehoming123", host)
 	mail.AddHeader("Content-Type", "text/html")
 	return mail.Send()
 }
