@@ -23,9 +23,9 @@ type EmailTemplate struct {
 }
 
 type APIResponse struct {
-	Data    map[string]string
-	Success bool
-	Error   string
+	Data    map[string]string `json:"data"`
+	Success bool              `json:"success"`
+	Error   string            `json:"error"`
 }
 
 // Transform string to have uppercase at the start of each word
@@ -53,9 +53,7 @@ func transformFormData(formData map[string][]string) map[string]template.HTML {
 			key = ucwords(key)
 		}
 
-		if key == "Address" || key == "Message" { // Change new line into html break line
-			val[0] = strings.Replace(val[0], "\n", "<br />", -1)
-		}
+		val[0] = strings.Replace(val[0], "\n", "<br />", -1)
 
 		html := template.HTML([]byte(val[0]))
 
@@ -63,6 +61,24 @@ func transformFormData(formData map[string][]string) map[string]template.HTML {
 	}
 
 	return fd
+}
+
+// Function to create the connection to email server and sent the email
+func sendEmail(from, subject, body string) (bool, error) {
+	// Send email
+	host, _, _ := net.SplitHostPort(servername)
+
+	// Create new SendMail instance
+	mail := sendmail.New(servername, from, subject, body)
+	_, err := mail.AddToAddress("Admin", "admin@pygmyhedgehogrehoming.co.uk")
+	if err != nil {
+		return false, err
+	}
+
+	// Authenticate with smtp server
+	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", "7639sonicadv!", host)
+	mail.AddHeader("Content-Type", "text/html")
+	return mail.Send()
 }
 
 // Parse api template
@@ -120,22 +136,9 @@ func adoptionHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 
-	// Send email
-	host, _, _ := net.SplitHostPort(servername)
 	from := string(fd["Name"]) + " <" + string(fd["Email"]) + ">"
 
-	// Create new SendMail instance
-	mail := sendmail.New(servername, from, "Adoption From", eb.String())
-	_, err = mail.AddToAddress("Admin", "admin@pygmyhedgehogrehoming.co.uk")
-	if err != nil {
-		clientError(w, err)
-		return
-	}
-
-	// Authenticate with smtp server
-	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", "7639sonicadv!", host)
-	mail.AddHeader("Content-Type", "text/html")
-	ok, err := mail.Send()
+	ok, err := sendEmail(from, "Adoption Form", eb.String())
 	if err != nil {
 		clientError(w, err)
 		return
@@ -184,22 +187,9 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 
-	// Send mail
-	host, _, _ := net.SplitHostPort(servername)
 	from := string(fd["Name"]) + " <" + string(fd["Email"]) + ">"
 
-	// Create new SendMail instance
-	mail := sendmail.New(servername, from, string(fd["Subject"]), eb.String())
-	_, err = mail.AddToAddress("Admin", "admin@pygmyhedgehogrehoming.co.uk")
-	if err != nil {
-		clientError(w, err)
-		return
-	}
-
-	// Authenticate with smtp server
-	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", "7639sonicadv!", host)
-	mail.AddHeader("Content-Type", "text/html")
-	ok, err := mail.Send()
+	ok, err := sendEmail(from, string(fd["Subject"]), eb.String())
 	if err != nil {
 		clientError(w, err)
 		return
@@ -222,7 +212,7 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
-// Handle home for hog hog api route calls
+// Handle home for hog api route calls
 func homeForHogHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(2 << 10); err != nil {
 		clientError(w, err)
@@ -253,22 +243,9 @@ func homeForHogHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 
-	// Send email
-	host, _, _ := net.SplitHostPort(servername)
 	from := string(fd["Name"]) + " <" + string(fd["Email"]) + ">"
 
-	// Create new SendMail instance
-	mail := sendmail.New(servername, from, "Find a Home For Your Hog", eb.String())
-	_, err = mail.AddToAddress("Admin", "admin@pygmyhedgehogrehoming.co.uk")
-	if err != nil {
-		clientError(w, err)
-		return
-	}
-
-	// Authenticate with smtp server
-	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", "7639sonicadv!", host)
-	mail.AddHeader("Content-Type", "text/html")
-	ok, err := mail.Send()
+	ok, err := sendEmail(from, "Find a Home For Your Hog", eb.String())
 	if err != nil {
 		clientError(w, err)
 		return
@@ -291,6 +268,59 @@ func homeForHogHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
+// Handle forster carer api route calls
+func fosterCarerHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseMultipartForm(2 << 10); err != nil {
+		clientError(w, err)
+	}
+
+	fd := transformFormData(r.Form)
+
+	t, err := apiTemplate("email")
+	if err != nil {
+		clientError(w, err)
+	}
+
+	var eb bytes.Buffer // Store email body
+	t.Execute(&eb, EmailTemplate{
+		Title:    "Foster Carer Application",
+		FormData: fd,
+		Order: []string{
+			"Name",
+			"Address",
+			"Email",
+			"Number",
+			"Why Would You Like To Foster",
+			"What Setup Do You Have",
+			"Any Further Information",
+			"Over 18",
+		},
+	})
+
+	from := string(fd["Name"]) + " <" + string(fd["Email"]) + ">"
+
+	ok, err := sendEmail(from, "Foster Carer Application", eb.String())
+	if err != nil {
+		clientError(w, err)
+		return
+	} else if !ok {
+		clientError(w, err)
+	}
+
+	// Create json from api response
+	var resp = APIResponse{
+		Success: true,
+	}
+	js, err := json.Marshal(resp)
+	if err != nil {
+		clientError(w, err)
+		return
+	}
+
+	w.Header().Set("Conte-Type", "application/json")
+	w.Write(js)
+}
+
 func apiHandler(w http.ResponseWriter, r *http.Request) {
 	p := strings.Replace(r.URL.Path, "/api", "", 1)
 
@@ -299,6 +329,8 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		adoptionHandler(w, r)
 	case "/home-for-hog":
 		homeForHogHandler(w, r)
+	case "/foster-carer":
+		fosterCarerHandler(w, r)
 	case "/contact":
 		contactHandler(w, r)
 	default:

@@ -82,7 +82,7 @@ $(document).ready(function () {
                 body: formData
             });
 
-            let {Success: success, Error: error} = await response.jsonCatch(); // Retrieve the response as json
+            let {success, error} = await response.jsonCatch(); // Retrieve the response as json
 
             if(message) {
                 message.close();
@@ -92,6 +92,8 @@ $(document).ready(function () {
             if(success) {
                 if(routeType == "home-for-hog") {
                     routeType = "Find a Home For Your Hog";
+                } else if(routeType == "foster-carer") {
+                    routeType = "Foster Carers";
                 }
 
                 UIkit.notify(`Successfully submitted ${routeType} form`, { status: "success", timeout: 0 });
