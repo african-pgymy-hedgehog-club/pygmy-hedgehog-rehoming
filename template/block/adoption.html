@@ -1,7 +1,9 @@
 {{define "title"}}Pygmy Hedgehog Rehoming{{end}}
 {{define "color"}}heading-background{{end}}
-
-
+{{define "scripts"}}
+    <script src="/js/adoption.js" charset="utf-8"></script>
+    <script src="/js/components/lightbox.min.js" charset="utf-8"></script>
+{{end}}
 
 {{define "heading"}}
     <div class="uk-text-center uk-width-1-1" id="heading">
@@ -10,5 +12,34 @@
 {{end}}
 
 {{define "body"}}
-    <h2>Coming Soon</h2>
+    <div id="adoption-details" class="uk-grid uk-width-1-1">
+        <span class="uk-h3 uk-margin-large-bottom">Click the hedghog's image for more information</span>
+        
+        <a class="uk-text-center uk-width-1-2" name="albert">
+            <img src="/images/hedgehogs/albert-small.jpg" />
+            <br />
+            <span class="uk-h3">Albert</span>
+        </a>
+    </div>
+
+    <div id="albert" class="uk-grid uk-margin-top-remove uk-width-1-1 uk-hidden hedgehog">
+        <a href="/images/hedgehogs/albert.jpg" title="Albert" data-uk-lightbox>
+            <img src="/images/hedgehogs/albert-small.jpg" />
+        </a>
+        <br />
+        <div>
+            <span class="uk-h3">Albert</span> <br />
+            Colour: Albino <br />
+            Gender: Male <br />
+            Age: 2-3 years old. <br />
+            Health Status: Healthy <br />
+        </div>
+        <div class="uk-grid uk-width-1-1 uk-float">
+            <p class="uk-width-1-1">
+                Albert will require a patient home with someone that is willing to work with him, Albert doesn't like to be handled and will need regular handling to help him become more hand friendly. He's a little grumpy but has moved home many times in his life time and with a caring, patient, stable home he may start to settle and become a bit more confident.
+                He's currently in foster care and his foster carer is handling him daily to help him gain confidence.
+                He's currently being fostered in Wales but can arrange transport to his forever home.
+            </p>
+        </div>
+    </div>
 {{end}}
