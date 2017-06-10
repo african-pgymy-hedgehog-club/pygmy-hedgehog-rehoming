@@ -14,7 +14,7 @@ import (
 	"github.com/sc7639/sendmail"
 )
 
-const servername = "95.154.246.177:25"
+const servername = "176.58.104.35:25"
 
 type EmailTemplate struct {
 	Title    string
@@ -170,26 +170,9 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 
 	fd := transformFormData(r.Form)
 
-	t, err := apiTemplate("email")
-	if err != nil {
-		clientError(w, err)
-		return
-	}
-
-	var eb bytes.Buffer
-	t.Execute(&eb, EmailTemplate{
-		Title:    "Contact Form",
-		FormData: fd,
-		Order: []string{
-			"Name",
-			"Email",
-			"Message",
-		},
-	})
-
 	from := string(fd["Name"]) + " <" + string(fd["Email"]) + ">"
 
-	ok, err := sendEmail(from, string(fd["Subject"]), eb.String())
+	ok, err := sendEmail(from, string(fd["Subject"]), string(fd["Message"]))
 	if err != nil {
 		clientError(w, err)
 		return

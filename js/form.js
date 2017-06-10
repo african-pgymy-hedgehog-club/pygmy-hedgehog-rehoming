@@ -65,6 +65,7 @@ $(document).ready(function () {
     $("form").submit(function (e) { // On form submit send to api specified in the action attribute
         e.preventDefault();
 
+        let form = $(this);
         let route = $(this).attr("action");
         let routeType = route.split("/").slice(-1)[0];
         let formData = new FormData( $(this)[0] );
@@ -75,47 +76,42 @@ $(document).ready(function () {
         let messageTimeout = setTimeout(function() {
             message = UIkit.notify("Working to submit form... <i class='uk-icon-spinner uk-icon-spin'></i>", { status: "message", timeout: 0 });
         }, 1500);
-        try {
-            buttons.attr("disabled", true); // Disable form button
+        buttons.attr("disabled", true); // Disable form button
 
-            fetch(route, { // Async post the data to the backend api
-                credentials: "same-origin",
-                method: "POST",
-                body: formData
-            }).then(function (response) {
-                return response.jsonCatch();
-            }).then(function (data) {
-                let success = data.success;
-                let error = data.error || null;
+        fetch(route, { // Async post the data to the backend api
+            credentials: "same-origin",
+            method: "POST",
+            body: formData
+        }).then(function (response) {
+            return response.jsonCatch();
+        }).then(function (data) {
+            let success = data.success;
+            let error = data.error || null;
 
-                if(message) {
-                    message.close();
-                }
-                clearTimeout(messageTimeout);
+            if(message) {
+                message.close();
+            }
+            clearTimeout(messageTimeout);
 
-                if(success) {
-                    if(routeType == "home-for-hog") {
-                        routeType = "Find a Home For Your Hog";
-                    } else if(routeType == "foster-carer") {
-                        routeType = "Foster Carers";
-                    }
-
-                    UIkit.notify("Successfully submitted " + routeType + " form", { status: "success", timeout: 0 });
-                    emptyForm( $(this) );
-                }
-                else if(error) {
-                    UIkit.notify(error, { status: "danger", timeout: 3500 });
-                }
-                else {
-                    UIkit.notify("Sorry, there was an error", { status: "danger", timeout: 3500 });
+            if(success) {
+                if(routeType == "home-for-hog") {
+                    routeType = "Find a Home For Your Hog";
+                } else if(routeType == "foster-carer") {
+                    routeType = "Foster Carers";
                 }
 
-                buttons.attr("disabled", false); // Enable form buttons
-            })
+                UIkit.notify("Successfully submitted " + routeType + " form", { status: "success", timeout: 0 });
+                emptyForm(form);
+            }
+            else if(error) {
+                UIkit.notify(error, { status: "danger", timeout: 3500 });
+            }
+            else {
+                UIkit.notify("Sorry, there was an error", { status: "danger", timeout: 3500 });
+            }
 
-
-        }
-        catch(err) {
+            buttons.attr("disabled", false); // Enable form buttons
+        }).catch(err => {
             if(message) {
                 message.close();
             }
@@ -127,7 +123,7 @@ $(document).ready(function () {
                 buttons.attr("disabled", false); // Enable form buttons
                 console.error(err);
             });
-        }
+        });
     });
 
     $("button#reset").click(function (e) { // On reset button click, empty form inputs
