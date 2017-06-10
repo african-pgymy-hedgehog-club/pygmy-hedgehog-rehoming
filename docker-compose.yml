@@ -5,3 +5,4 @@ services:
         build: ./
         ports:
             - "3500:8080"
+        restart: always
