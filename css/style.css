@@ -129,7 +129,7 @@ div#adoption-details a, div#adoption-details a:link, div#adoption-details a:visi
     text-decoration: none;
 }
 
-div#adoption-details a:hover {
+div#adoption-details a:hover, div.hedgehog a:hover {
     opacity: 0.8;
 
     /* IE 8 */
