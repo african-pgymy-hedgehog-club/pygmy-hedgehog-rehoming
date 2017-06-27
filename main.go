@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -28,11 +30,12 @@ const layout = templateFolder + "_layout.html"
 
 // Write error response to the client
 func clientError(w http.ResponseWriter, err error) {
-	httpError := err.Error()
+	httpError := fmt.Sprintf("%s[%s:%d] %v", runtime.FuncForPC(pc).Name(), fn, line, err)
 	if APP_ENV != "dev" {
 		httpError = "Sorry, there was an error"
 
-		log.Println(err.Error()) // Log error if it's not displayed to the client
+		pc, fn, line, _ := runtime.Caller(1)
+		log.Println(httpError) // Log error if it's not displayed to the client
 	}
 
 	http.Error(w, httpError, http.StatusInternalServerError)

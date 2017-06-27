@@ -16,12 +16,14 @@ import (
 
 const servername = "176.58.104.35:25"
 
+// EmailTemplate holds data that is used when parsing the email template
 type EmailTemplate struct {
 	Title    string
 	FormData map[string]template.HTML
 	Order    []string
 }
 
+// APIResponse is used to parse data into json
 type APIResponse struct {
 	Data    map[string]string `json:"data"`
 	Success bool              `json:"success"`
@@ -95,8 +97,10 @@ func apiTemplate(tmpl string) (*template.Template, error) {
 // Handle adoption api route calls
 func adoptionHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(2 << 10); err != nil {
-		clientError(w, err)
-		return
+		if err = r.ParseForm(); err != nil {
+			clientError(w, err)
+			return
+		}
 	}
 
 	fd := transformFormData(r.Form)
@@ -164,8 +168,10 @@ func adoptionHandler(w http.ResponseWriter, r *http.Request) {
 // Handle contact api route calls
 func contactHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(2 << 10); err != nil {
-		clientError(w, err)
-		return
+		if err = r.ParseForm(); err != nil {
+			clientError(w, err)
+			return
+		}
 	}
 
 	fd := transformFormData(r.Form)
@@ -198,8 +204,10 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 // Handle home for hog api route calls
 func homeForHogHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(2 << 10); err != nil {
-		clientError(w, err)
-		return
+		if err = r.ParseForm(); err != nil {
+			clientError(w, err)
+			return
+		}
 	}
 
 	fd := transformFormData(r.Form)
@@ -254,7 +262,10 @@ func homeForHogHandler(w http.ResponseWriter, r *http.Request) {
 // Handle forster carer api route calls
 func fosterCarerHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseMultipartForm(2 << 10); err != nil {
-		clientError(w, err)
+		if err = r.ParseForm(); err != nil {
+			clientError(w, err)
+			return
+		}
 	}
 
 	fd := transformFormData(r.Form)
@@ -304,6 +315,20 @@ func fosterCarerHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(js)
 }
 
+// Handle logging errors
+func logHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseMultipartForm(2 << 10); err != nil {
+		if err = r.ParseForm(); err != nil {
+			clientError(w, err)
+			return
+		}
+	}
+
+	// json.Unmarshal(data, v)
+	//
+	// err := errors.New()
+}
+
 func apiHandler(w http.ResponseWriter, r *http.Request) {
 	p := strings.Replace(r.URL.Path, "/api", "", 1)
 
@@ -316,6 +341,8 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		fosterCarerHandler(w, r)
 	case "/contact":
 		contactHandler(w, r)
+	case "/log":
+		logHandler(w, r)
 	default:
 		clientError(w, errors.New("This api route doesn't exist"))
 	}
