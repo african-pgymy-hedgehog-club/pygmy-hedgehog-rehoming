@@ -34,8 +34,9 @@ func clientError(w http.ResponseWriter, err error) {
 	httpError := fmt.Sprintf("%s[%s:%d] %v", runtime.FuncForPC(pc).Name(), fn, line, err)
 
 	if APP_ENV != "dev" {
-		httpError = "Sorry, there was an error"
 		log.Println(httpError) // Log error if it's not displayed to the client
+
+		httpError = "Sorry, there was an error"
 	}
 
 	http.Error(w, httpError, http.StatusInternalServerError)
