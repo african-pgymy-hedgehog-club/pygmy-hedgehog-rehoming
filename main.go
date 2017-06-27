@@ -30,11 +30,11 @@ const layout = templateFolder + "_layout.html"
 
 // Write error response to the client
 func clientError(w http.ResponseWriter, err error) {
+	pc, fn, line, _ := runtime.Caller(1)
 	httpError := fmt.Sprintf("%s[%s:%d] %v", runtime.FuncForPC(pc).Name(), fn, line, err)
+
 	if APP_ENV != "dev" {
 		httpError = "Sorry, there was an error"
-
-		pc, fn, line, _ := runtime.Caller(1)
 		log.Println(httpError) // Log error if it's not displayed to the client
 	}
 
