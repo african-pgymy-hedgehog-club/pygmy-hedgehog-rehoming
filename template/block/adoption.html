@@ -4,6 +4,10 @@
     <script src="/js/adoption.js" charset="utf-8"></script>
     <script src="/js/components/lightbox.min.js" charset="utf-8"></script>
 {{end}}
+{{define "styles"}}
+    <link rel="stylesheet" href="/css/components/slidenav.almost-flat.min.css" />
+{{end}}
+
 
 {{define "heading"}}
     <div class="uk-text-center uk-width-1-1" id="heading">
@@ -12,32 +16,59 @@
 {{end}}
 
 {{define "body"}}
-    <div id="adoption-details" class="uk-grid uk-width-1-1">
-        <div class="uk-h3 uk-margin-large-bottom uk-width-1-1">Click the image for more information</div>
+    <div id="adoption-details" class="uk-width-1-1">
+        <ul class="uk-tab" data-uk-tab="{connect: '#adoption'}">
+          <li class="uk-active">
+              <a class="uk-text-bold">For Adoption</a>
+          </li>
+          <li>
+              <a class="uk-text-bold">Adopted</a>
+          </li>
+        </ul>
 
-        <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="albert">
-            <img class="uk-margin-small-bottom" src="/images/hedgehogs/albert-small.jpg" />
-            <br />
-            <span class="uk-h3">Albert</span>
-        </a>
+        <ul id="adoption" class="uk-switcher uk-margin-top">
+            <div name="for adoption" class="uk-grid uk-width-1-1">
+                <div class="uk-h3 uk-margin-large-bottom uk-width-1-1 uk-margin-left">Click the image for more information</div>
 
-        <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="wispa">
-            <img class="uk-margin-small-bottom" src="/images/hedgehogs/wispa-small.png" />
-            <br />
-            <span class="uk-h3">Wispa</span>
-        </a>
+                <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="albert">
+                    <img class="uk-margin-small-bottom" src="/images/hedgehogs/albert-small.jpg" />
+                    <br />
+                    <span class="uk-h3">Albert</span>
+                </a>
 
-        <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="zeus">
-            <img class="uk-margin-small-bottom" src="/images/hedgehogs/zeus-small.jpg" />
-            <br />
-            <span class="uk-h3">Zeus</span>
-        </a>
+                <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="zeus">
+                    <img class="uk-margin-small-bottom" src="/images/hedgehogs/zeus-small.jpg" />
+                    <br />
+                    <span class="uk-h3">Zeus</span>
+                </a>
 
-        <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="pinny">
-            <img class="uk-margin-small-bottom" src="/images/hedgehogs/pinny-small.jpg" />
-            <br />
-            <span class="uk-h3">Zeus</span>
-        </a>
+                <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="pinny">
+                    <img class="uk-margin-small-bottom" src="/images/hedgehogs/pinny-small.jpg" />
+                    <br />
+                    <span class="uk-h3">Pinny</span>
+                </a>
+
+                <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="shylo">
+                    <img class="uk-margin-small-bottom" src="/images/hedgehogs/shylo-small.jpg" />
+                    <br />
+                    <span class="uk-h3">Shylo</span>
+                </a>
+
+                <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="tigward">
+                    <img class="uk-margin-small-bottom" src="/images/hedgehogs/tigward-small.jpg" />
+                    <br />
+                    <span class="uk-h3">Tigward</span>
+                </a>
+            </div>
+
+            <div name="adopted" class="uk-grid uk-width-1-1">
+                <a class="uk-text-center uk-width-1-2 uk-margin-large-top" name="wispa">
+                    <img class="uk-margin-small-bottom" src="/images/hedgehogs/wispa-small.jpg" />
+                    <br />
+                    <span class="uk-h3 uk-text-center">Wispa</span>
+                </a>
+            </div>
+        </ul>
     </div>
 
     <div id="albert" class="uk-grid uk-margin-large-top-remove uk-width-1-1 uk-hidden hedgehog">
@@ -57,29 +88,6 @@
                 Albert will require a patient home with someone that is willing to work with him, Albert doesn't like to be handled and will need regular handling to help him become more hand friendly. He's a little grumpy but has moved home many times in his life time and with a caring, patient, stable home he may start to settle and become a bit more confident.
                 He's currently in foster care and his foster carer is handling him daily to help him gain confidence.
                 He's currently being fostered in Wales but can arrange transport to his forever home.
-            </p>
-        </div>
-    </div>
-
-    <div id="wispa" class="uk-grid uk-margin-large-top-remove uk-width-1-1 uk-hidden hedgehog">
-        <a href="/images/hedgehogs/wispa.jpg" title="Wispa" data-uk-lightbox>
-            <img src="/images/hedgehogs/wispa-small.png" />
-        </a>
-        <br />
-        <div>
-            <span class="uk-h3">Wispa</span> <br />
-            Colour: Chocolate <br />
-            Gender: Female <br />
-            Age: 18 months - 2 years old. <br />
-            Health Status: Healthy <br />
-        </div>
-        <div class="uk-grid uk-width-1-1 uk-float">
-            <p class="uk-width-1-1">
-                Wispa is a lovely girl who's been passed around a few homes.
-                She's huffy at first but takes very little time before she comes around.
-                She's a sweet girl who will benefit from a loving forever home.
-                She will need weaning on to better food as her current diet isn't great.
-                 Wispa is looking for a pet only home.
             </p>
         </div>
     </div>
@@ -121,6 +129,79 @@
                 Pinny is a lovely girl who's a little huffy when you first get her out however she soon settles and is very friendly.
                 She likes to explore and likes to cuddle up on your arm. She will make a wonderful first time hedgehog.
                 As she's young she will need to be handled regularly to maintain her friendly temperament. She is possibly reserved.
+            </p>
+        </div>
+    </div>
+
+    <div id="wispa" class="uk-grid uk-margin-large-top-remove uk-width-1-1 uk-hidden hedgehog">
+        <a href="/images/hedgehogs/wispa.jpg" title="Wispa" data-uk-lightbox>
+            <img src="/images/hedgehogs/wispa-small.jpg" />
+        </a>
+        <br />
+        <div>
+            <span class="uk-h3">Wispa</span> <br />
+            Colour: Chocolate <br />
+            Gender: Female <br />
+            Age: 18 months - 2 years old. <br />
+            Health Status: Healthy <br />
+        </div>
+        <div class="uk-grid uk-width-1-1 uk-float">
+            <p class="uk-width-1-1">
+                Wispa is a lovely girl who's been passed around a few homes.
+                She's huffy at first but takes very little time before she comes around.
+                She's a sweet girl who will benefit from a loving forever home.
+                She will need weaning on to better food as her current diet isn't great.
+                 Wispa is looking for a pet only home.
+            </p>
+        </div>
+    </div>
+
+    <div id="shylo" class="uk-grid uk-margin-large-top-remove uk-width-1-1 uk-hidden hedgehog">
+        <a href="/images/hedgehogs/shylo.jpg" title="Shylo" data-uk-lightbox="{group: 'shylo'}">
+            <img src="/images/hedgehogs/shylo-small.jpg" />
+        </a>
+        <br />
+        <a href="/images/hedgehogs/shylo2.jpg" title="Shylo" data-uk-lightbox="{group: 'shylo'}">
+            <img src="/images/hedgehogs/shylo2-small.jpg" />
+        </a>
+        <div>
+            <span class="uk-h3">Shylo</span> <br />
+            Colour: Brown <br />
+            Gender: Male <br />
+            Age: Almost 4 <br />
+            Health Status: Healthy <br />
+        </div>
+        <div class="uk-grid uk-width-1-1 uk-float">
+            <p class="uk-width-1-1">
+                <b>**SPECIAL HOME WANTED**</b>
+                <br />
+                This is Shylo, this handsome boy is almost 4 years old. Sadly his owner made the heartbreaking choice to rehome him.
+                This boy is looking for a home to spend the rest of his life.
+                Due to his age we can't say if this will be months or a year+ and we understand this may put a lot of people off.
+                However if you can give Shylo a great retirement home please get in touch.
+                Due to his age we are willing to drop his rehoming fee in hopes of finding a nice mummy or daddy to cuddle with.
+                He is on the large side (600g) but he's with a lovely carer who's working with him to try to get his weight down.
+                Any owner would potentially have to keep this work up to maintain a good healthy weight.
+            </p>
+        </div>
+    </div>
+
+    <div id="tigward" class="uk-grid uk-margin-large-top-remove uk-width-1-1 uk-hidden hedgehog">
+        <a href="/images/hedgehogs/tigward.jpg" title="Shylo" data-uk-lightbox>
+            <img src="/images/hedgehogs/tigward-small.jpg" />
+        </a>
+        <div>
+            <span class="uk-h3">Tigward</span> <br />
+            Colour: Reverse Pinto <br />
+            Gender: Male <br />
+            Age: 2 years and 7 months <br />
+            Health Status: Healthy <br />
+        </div>
+        <div class="uk-grid uk-width-1-1 uk-float">
+            <p class="uk-width-1-1">
+                Tigward is a lovely boy, handsome with a sweet nature.
+                He's already won the heart of his foster carer.
+                He's only just arrived in our care we will write more about him as we get to know him better.
             </p>
         </div>
     </div>
