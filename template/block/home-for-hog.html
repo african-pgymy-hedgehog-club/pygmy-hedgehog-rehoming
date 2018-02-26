@@ -1,8 +1,6 @@
 {{define "title"}}Pygmy Hedgehog Rehoming{{end}}
 {{define "color"}}heading-background{{end}}
 {{define "scripts"}}
-    <script src="js/promise.min.js" charset="utf-8"></script>
-    <script src="js/fetch.min.js" charset="utf-8"></script>
     <script src="js/form.js" charset="utf-8"></script>
     <script src="js/components/tooltip.min.js" charset="utf-8"></script>
     <script src="js/components/notify.min.js" charset="utf-8"></script>
@@ -28,9 +26,30 @@
         </div>
 
         <div class='uk-form-row'>
-            <label class='uk-form-label'>Address</label>
+            <label class='uk-form-label'>Street Address</label>
             <div class='uk-form-controls'>
-                <textarea name="address" rows="4" cols="22" required></textarea>
+                <input type='text' name='street_address' required />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Address 2</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='address2' />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Town</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='town' required />
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Postcode</label>
+            <div class='uk-form-controls'>
+                <input type='text' name='postcode' pattern="[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}" required />
             </div>
         </div>
 
@@ -59,6 +78,16 @@
             <label class='uk-form-label'>Hedgehog Age</label>
             <div class='uk-form-controls'>
                 <input type='text' name='hedgehog_age' required/>
+            </div>
+        </div>
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Hog Gender</label>
+            <div class='uk-form-controls'>
+                <select name="hedgehog_gender" style="height: 35px;">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
             </div>
         </div>
 
