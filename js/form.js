@@ -59,6 +59,9 @@ Response.prototype.jsonCatch = function() {
  */
 function emptyForm(form) {
     form.find("input, textarea").val("");
+    
+    let firstSelectVal = form.find("select option").eq(0).val();
+    form.find("select").val(firstSelectVal);
 }
 
 $(document).ready(function () {
