@@ -6,3 +6,4 @@ services:
         ports:
             - "3500:8080"
         restart: always
+        env_file: .env

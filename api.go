@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"net"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -78,7 +79,7 @@ func sendEmail(from, subject, body string) (bool, error) {
 	}
 
 	// Authenticate with smtp server
-	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", "rehoming123", host)
+	mail.Auth("admin@pygmyhedgehogrehoming.co.uk", os.Getenv("EMAIL_PASSWORD"), host)
 	mail.AddHeader("Content-Type", "text/html")
 	return mail.Send()
 }
