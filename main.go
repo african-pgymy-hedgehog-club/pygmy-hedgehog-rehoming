@@ -42,7 +42,7 @@ func clientError(w http.ResponseWriter, err error) {
 	http.Error(w, httpError, http.StatusInternalServerError)
 }
 
-// Render pased template file
+// Render passed template file
 func renderTemplate(w http.ResponseWriter, tmpl string) {
 	tmpl = filepath.Join(templateFolder, "block", tmpl+".html")
 	t, err := template.ParseFiles(layout, nav, tmpl)
@@ -64,9 +64,8 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		renderTemplate(w, "index")
 	} else if strings.HasPrefix(p, "/api") {
 		apiHandler(w, r)
-	} else if strings.HasPrefix(p, "/adoption/") { // Handle any fake adoption pages
-		var template = "adoption"
-		renderTemplate(w, template)
+	} else if strings.HasPrefix(p, "/adoption") { // Handle any fake adoption pages
+		http.Redirect(w, r, "https://africanpygmyhedgehogclub.co.uk/club-rescue", 301)
 	} else {
 		template := r.URL.Path[1:]
 		renderTemplate(w, template)
