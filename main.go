@@ -64,7 +64,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		renderTemplate(w, "index")
 	} else if strings.HasPrefix(p, "/api") {
 		apiHandler(w, r)
-	} else if strings.HasPrefix(p, "/adoption") { // Handle any fake adoption pages
+	} else if p == "/adoption" {
 		http.Redirect(w, r, "https://africanpygmyhedgehogclub.co.uk/club-rescue", 301)
 	} else {
 		template := r.URL.Path[1:]
