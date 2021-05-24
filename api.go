@@ -148,6 +148,7 @@ func adoptionHandler(w http.ResponseWriter, r *http.Request) {
 			"Who Lives In The Household",
 			"Relevant Experience",
 			"Set Up",
+			"Set Up Image",
 			"Feed Hedgehog",
 			"How Often Handle Hedgehog",
 			"Enrichment Will You Provide",
