@@ -153,3 +153,24 @@ div#adoption-details a:hover, div.hedgehog a:hover {
     /* Safari 1.x */
     -khtml-opacity: 0.6;
 }
+
+.required {
+    color: #e55;
+}
+
+label.uk-form-label {
+    font-weight: 600;
+    line-height: 25px;
+}
+
+.uk-form-controls {
+    margin-top: 5px;
+}
+
+input[type="radio"] {
+    margin-bottom: 5px;
+}
+
+div.uk-form-controls {
+    margin-bottom: 10px;
+}

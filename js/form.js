@@ -64,8 +64,8 @@ function emptyForm(form) {
     form.find("select").val(firstSelectVal);
 }
 
-$(document).ready(function () {
-    $("form").submit(function (e) { // On form submit send to api specified in the action attribute
+$(function () {
+    $("form").on("submit", function (e) { // On form submit send to api specified in the action attribute
         e.preventDefault();
 
         let form = $(this);

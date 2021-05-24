@@ -6,6 +6,8 @@
     <script src="js/form.js" charset="utf-8"></script>
     <script src="js/components/tooltip.min.js" charset="utf-8"></script>
     <script src="js/components/notify.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js" integrity="sha512-F+u8eWHrfY8Xw9BLzZ8rG/0wIvs0y+JyRJrXjp3VjtFPylAEEGwKbua5Ip/oiVhaTDaDs4eU2Xtsxjs/9ag2bQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/adoption-form.js"></script>
 {{end}}
 {{define "styles"}}
     <link rel="stylesheet" href="css/components/tooltip.almost-flat.min.css" />
@@ -19,39 +21,39 @@
 {{end}}
 
 {{define "body"}}
-    <form class="uk-form uk-form-horizontal" action="api/adoption">
+    <form class="uk-form" style="width: 88%" action="api/adoption">
         <div class='uk-form-row'>
-            <label class='uk-form-label'>Name</label>
+            <label class='uk-form-label'>Name <span class="required">*</span></label>
             <div class='uk-form-controls'>
                 <input type='text' name='name' required />
             </div>
         </div>
 
         <div class='uk-form-row'>
-            <label class='uk-form-label'>Address</label>
+            <label class='uk-form-label'>Address <span class="required">*</span></label>
             <div class='uk-form-controls'>
                 <textarea name="address" rows="4" cols="22" required></textarea>
             </div>
         </div>
 
         <div class='uk-form-row'>
-            <label class='uk-form-label'>DOB</label>
+            <label class='uk-form-label'>DOB <span class="required">*</span></label>
             <div class='uk-form-controls'>
                 <input type='date' name='dob' required />
             </div>
         </div>
 
         <div class='uk-form-row'>
-            <label class='uk-form-label'>Email</label>
+            <label class='uk-form-label'>Email <span class="required">*</span></label>
             <div class='uk-form-controls'>
                 <input type='email' name='email' required />
             </div>
         </div>
 
         <div class='uk-form-row'>
-            <label class='uk-form-label'>Contact Number</label>
+            <label class='uk-form-label'>Contact Number <span class="required">*</span></label>
             <div class='uk-form-controls'>
-                <input type='text' name='number' required />
+                <input type='text' name='contact_number' required />
             </div>
         </div>
 
@@ -64,58 +66,313 @@
                 <input type='text' name='hedgehog_name' />
             </div>
         </div>
+        
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Are you over 18? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <input type="radio" name="over_18" value="Yes" required /> Yes
+                <input class="uk-margin-large-left" type="radio" name="over_18" value="No" required /> No
+            </div>
+        </div>
 
-        <fieldset class="uk-margin-large-top">
-            <legend>
-                Details for Waiting List
-                <i class="uk-icon-question-circle" title="Leave blank if you don't want to go on the waiting list" data-uk-tooltip></i>
+        <div class="uk-form-row">
+            <label class="uk-form-label">Do you rent or own your home? If other, please add details <span class="required">*</span></label>
+            <div class="uk-form-controls">
+                <input type="radio" name="own_or_rent" value="own" required /> Own
+                <br />
+                <input type="radio" name="own_or_rent" value="rent" required /> Rent
+                <br />
+                <input type="radio" name="own_or_rent" value="other" required /> Other: <input class="uk-margin-left" type="text" name="other_home_details" value="" />
+            </div>
+        </div>
+
+        <div class="uk-form-row">
+            <label class="uk-form-label">If you live with your parents, do you have permission? <span class="required">*</span></label>
+            <div class="uk-form-controls">
+                <input type="radio" name="live_with_parents_have_permission" value="Yes" required> Yes
+                <br />
+                <input type="radio" name="live_with_parents_have_permission" value="No" required> No
+                <br />
+                <input type="radio" name="live_with_parents_have_permission" value="n/a" required> N/A
+            </div>
+        </div>
+
+        <div class="uk-form-row">
+            <label class="uk-form-label">Have you spoken with anyone else you live with to ensure they are happy with a hedgehog joining the home? <span class="required">*</span></label>
+            <div class="uk-form-controls">
+                <input type="radio" name="spoken_with_anyone_else_you_live_with" value="Yes" required> Yes
+                <br />
+                <input type="radio" name="spoken_with_anyone_else_you_live_with" value="No" required> No
+                <br />
+                <input type="radio" name="spoken_with_anyone_else_you_live_with" value="I live alone so not applicable" required> I live alone so not applicable
+            </div>
+        </div>
+
+        <div class="uk-form-row">
+            <label class="uk-form-label">Do you have any care plans if you should go on holiday or hospital? <span class="required">*</span></label>
+            <div class="uk-form-controls">
+                <input type="radio" name="care_plans_if_you_go_on_holiday_or_hospital" value="Yes" required> Yes
+                <input type="radio" class="uk-margin-large-left" name="care_plans_if_you_go_on_holiday_or_hospital" value="No" required> No
+            </div>
+        </div>
+
+        
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Please give details regarding these care plans and if no care plans how will you ensure the hedgehog is cared for? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="details_regarding_care_plans" rows="3" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Why would you like to adopt a hedgehog? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="why_would_you_like_to_adopt_a_hedgehog" rows="3" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <fieldset class="uk-margin-large-top uk-margin-bottom">
+            <legend class="uk-text-bold">
+                In the event you do not get your preferred hedgehog and/or you do not have a specific hedgehog in mind, please answer the following questions.
             </legend>
 
             <div class='uk-form-row'>
-                <label class='uk-form-label'>Gender</label>
+                <label class='uk-form-label'>Do you have a preference on gender <span class="required">*</span></label>
                 <div class='uk-form-controls'>
-                    <input type='radio' name='hedgehog_gender' value='male' /> Male
-                    <input class="uk-margin-large-left" type="radio" name="hedgehog_gender" value="female" /> Female
+                    <input type='radio' name='gender_preference' value='male' required /> Male
+                    <input class="uk-margin-large-left" type="radio" name="gender_preference" value="female" required /> Female
+                    <input class="uk-margin-large-left" type="radio" name="gender_preference" value="no preference" required /> No Preference
                 </div>
             </div>
 
-            <div class='uk-form-row'>
-                <label class='uk-form-label'>Colour</label>
-                <div class='uk-form-controls'>
-                    <input type='text' name='hedgehog_colour' />
-                </div>
-            </div>
+            
         </fieldset>
-
-        <div class='uk-form-row uk-margin-large-top'>
-            <label class='uk-form-label'>Do you currently own a hedgehog</label>
+        
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Would you adopt a hedgehog with behavioural problems? <span class="required">*</span></label>
             <div class='uk-form-controls'>
                 <input type='radio' name='currently_own_a_hedgehog' value='Yes' required /> Yes
                 <input class="uk-margin-large-left" type="radio" name="currently_own_a_hedgehog" value="No" required /> No
             </div>
         </div>
 
+        
         <div class='uk-form-row'>
-            <label class='uk-form-label'>Do you have any experience with hedgehogs</label>
+            <label class='uk-form-label'>Would you adopt a hedgehog with a physical disability? <span class="required">*</span></label>
             <div class='uk-form-controls'>
-                <input type='radio' name='experience' value='Yes' required /> Yes
-                <input class="uk-margin-large-left" type="radio" name="experience" value="No" required /> No
+                <input type='radio' name='adpot_a_hedgehog_with_physical_disability' value='Yes' required /> Yes
+                <input class="uk-margin-large-left" type="radio" name="adpot_a_hedgehog_with_physical_disability" value="No" required /> No
             </div>
         </div>
 
+
         <div class='uk-form-row'>
-            <label class='uk-form-label'>What do you plan to keep a hedghog in</label>
+            <label class='uk-form-label'>Would you adopt an older hedgehog? <span class="required">*</span></label>
             <div class='uk-form-controls'>
-                <textarea name="plan_to_keep_in" rows="5" cols="40" required></textarea>
+                <input type='radio' name='adopt_an_older_hedgehog' value='Yes' required /> Yes
+                <input class="uk-margin-large-left" type="radio" name="adopt_an_older_hedgehog" value="No" required /> No
+                <input class="uk-margin-large-left" type="radio" name="adopt_an_older_hedgehog" value="Would prefer not to but would not refuse an older hedgehog" required /> Would prefer not to but would not refuse an older hedgehog
             </div>
         </div>
 
+
         <div class='uk-form-row'>
-            <label class='uk-form-label'>What do you plan to feed a hedgehog</label>
+            <label class='uk-form-label'>Do you own any African Pygmy hedgehogs at the moment? <span class="required">*</span></label>
             <div class='uk-form-controls'>
-                <textarea name="plan_to_feed" rows="5" cols="40" requred></textarea>
+                <input type='radio' name='hedgehogs_own_at_the_moment' value='None' required /> None
+                <br />
+                <input type="radio" name="hedgehogs_own_at_the_moment" value="1 hedgehog" required /> Yes, 1 hedgehog
+                <br />
+                <input type="radio" name="hedgehogs_own_at_the_moment" value="2 hedgehogs" required /> Yes, 2 hedgehogs
+                <br />
+                <input type="radio" name="hedgehogs_own_at_the_moment" value="3 or more hedgehogs" required /> Yes, 3 or more hedgehogs
             </div>
         </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>How many years of experience do you have with Pygmy Hedgehogs? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <input type='radio' name='years_of_experience' value='None' required /> None / 0 years
+                <br />
+                <input type="radio" name="years_of_experience" value="1 year" required /> 1 year of experience
+                <br />
+                <input type="radio" name="years_of_experience" value="2 years" required /> 2 years of experience
+                <br />
+                <input type="radio" name="years_of_experience" value="3+ years" required /> 3+ years of experience
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>What Other pets do you have? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="other_pets" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+        
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Who lives in your household? Please include children and ages <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="who_lives_in_the_household" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+        
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>What relevant experience do you have that would help you take care of a hedgehog? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="relevant_experience" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>What set up will you house your adopted hedgehog in? Please include details of: Vivarium/cage including size, Heating (bulb or matt brand and type, wattage and thermostat used etc.), Equipment (e.g. wheels), bedding and substrate <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="set_up" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <!-- <div class='uk-form-row'>
+            <label class='uk-form-label'>Please upload any photos of enclosures and equipment <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <input type="file" name="set_up_photo" required />
+            </div>
+        </div> -->
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>What would you feed your hedgehog? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="feed_hedgehog" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>How often will you handle your hedgehog? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="how_often_handle_hedgehog" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>What enrichment will you provide your hedgehog? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="enrichment_will_you_provide" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Are you able to financially provide for the special care and possible vet care for an African Pygmy Hedgehog? Please give details. <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="able_to_financially_provide_for_special_care_and_vet_care" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Do you work? If so, do you have time to nurse your hedgehog should it become unwell, and complete relevant vet trips? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="work_do_you_have_time_to_nurse_hedgehog_and_complete_vet_trips" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>
+            <label class='uk-form-label'>Can you drive? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <input type='radio' name='can_you_drive' value='Yes' required /> Yes
+                <input type="radio" class="uk-margin-large-left" name="can_you_drive" value="No" required /> No
+            </div>
+        </div>
+
+
+        <div class='uk-form-row uk-hidden' id="can-you-drive-no">
+            <label class='uk-form-label'>Can someone you live with drive? If so, are they willing to help you collect a hedgehog? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <input type='radio' name='can_someone_you_live_with_drive' value='Yes' required /> Yes
+                <br />
+                <input type="radio" name="can_someone_you_live_with_drive" value="No" required /> No
+                <br />
+                <input type="radio" name="can_someone_you_live_with_drive" value="I live alone but someone else I know could collect" required /> I live alone but someone else I know could collect
+                <br />
+                <input type="radio" name="can_someone_you_live_with_drive" value="I live alone and no one else could collect" required /> I live alone and no one else could collect
+            </div>
+        </div>
+
+
+        <div class='uk-form-row'>What else do we need to know about you? <span class="required">*</span></label>
+            <div class='uk-form-controls'>
+                <textarea name="what_else_do_we_need_to_know_about_you" rows="4" cols="73" required></textarea>
+            </div>
+        </div>
+
+        <fieldset class="uk-margin-large-top">
+            <legend class="uk-text-bold">
+                Terms and Conditions
+            </legend>
+
+            
+            <div class='uk-form-row'>
+                <label class='uk-form-label'></label>I agree to not privately rehome any foster hedgehog without the permission of the Pygmy Hedgehog Rehoming Service <span class="required">*</span></label>
+                <div class='uk-form-controls'>
+                    <input type='radio' name='agree_not_to_privately_rehome_any_foster' value='Yes' required /> Yes
+                    <input type="radio" class="uk-margin-large-left" name="agree_not_to_privately_rehome_any_foster" value="No" required /> No
+                </div>
+            </div>
+
+
+            <div class='uk-form-row'>
+                <label class='uk-form-label'>I agree that should I be unable to look after the hedgehog(s) anymore I will hand them back to the Pygmy Hedgehog Rehoming Service <span class="required">*</span></label>
+                <div class='uk-form-controls'>
+                    <input type='radio' name='agree_that_unable_to_look_after_hedgehog_will_hand_back' value='Yes' required /> Yes
+                    <input type="radio" class="uk-margin-large-left" name="agree_that_unable_to_look_after_hedgehog_will_hand_back" value="No" required /> No
+                </div>
+
+
+            <div class='uk-form-row'>
+                <label class='uk-form-label'>I agree that I will never breed from my adopted hedgehog <span class="required">*</span></label>
+                <div class='uk-form-controls'>
+                    <input type='radio' name='agree_will_never_breed_from_adopted_hedgehog' value='Yes' required /> Yes
+                    <input type="radio" class="uk-margin-large-left" name="agree_will_never_breed_from_adopted_hedgehog" value="No" required /> No
+                </div>
+
+
+            <div class='uk-form-row'>
+                <label class='uk-form-label'>I agree that I will always try to act in the best interest of the hedgehog and will ALWAYS provide food, water, warmth, shelter, care and love  <span class="required">*</span></label>
+                <div class='uk-form-controls'>
+                    <input type='radio' name='agree_that_will_always_try_to_act_in_best_interest' value='Yes' required /> Yes
+                    <input type="radio" class="uk-margin-large-left" name="agree_that_will_always_try_to_act_in_best_interest" value="No" required /> No
+                </div>
+            </div>
+
+
+
+            <div class='uk-form-row'>
+                <label class='uk-form-label'>Signed by <span class="required">*</span></label>
+                <div class='uk-form-controls'>
+                    <input type="text" name="signed_by" value="" />
+                </div>
+            </div>
+
+
+
+            <div class='uk-form-row'>
+                <label class='uk-form-label'>Dated <span class="required">*</span></label>
+                <div class='uk-form-controls'>
+                    <input type="date" name="dated" readonly />
+                </div>
+            </div>
+        </fieldset>
+
 
         <div class="uk-margin-top">
             <button class="uk-button uk-button-danger uk-float-left" id="reset">Reset</button>
