@@ -13,5 +13,6 @@
 
 1. Commit changed to git
 2. Push files using `git push origin master`
-3. Go to `/home/admin/web/pygmy-hedgehog-rehoming` and pull changes using `git pull origin master`
-4. Deploy the new changes using `docker-compose up --build -d`
+3. Ssh into the server and go to `/home/admin/web/pygmy-hedgehog-rehoming` directory
+4. Pull changes using `git pull origin master`
+5. Deploy the new changes using `docker-compose up --build -d`
