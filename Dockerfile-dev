@@ -1,4 +1,4 @@
-FROM golang
+FROM golang:1.18
 
 # Install sendmail
 # RUN apt-get update && apt-get install sendmail -y
@@ -6,13 +6,18 @@ FROM golang
 # RUN line=$(head -n 1 /etc/hosts) && line2=$(echo $line | awk '{print $2}') && echo "$line $line2.localdomain" >> /etc/hosts
 
 # install fresh (golang rebuilder on file change)
+
+WORKDIR /go/src/app
+COPY go.mod go.mod
+COPY go.sum so.sum
+
 RUN go get -u github.com/sc7639/fresh github.com/sc7639/sendmail
+RUN go install github.com/sc7639/fresh 
 
 # create app dir
 RUN mkdir -p /go/src/app/ /go/src/tmp
 
 VOLUME /go/src/app
-WORKDIR /go/src/app
 EXPOSE 8080
 
 CMD ["fresh", "-c", "fresh.conf"]

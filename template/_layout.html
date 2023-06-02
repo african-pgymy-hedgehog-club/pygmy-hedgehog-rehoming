@@ -1,76 +1,86 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>{{template "title"}}</title>
 
-        <meta name="description" content="Helping find homes for hogs in need">
-        <meta name="keywords" content="hedgehog, rescue, african pygmy hedgehog, rehoming, club, uk, adoption, hedgehog rescue, african pygmy hedgehog rehoming, pygmy hedgehog rehoming, pygmy hedgehog rescue">
-        <meta name="google-site-verification" content="w-hHUHjE9Vz5RjBF8WJY3Burl3gg0HZcjjdaL3XZpfQ" />
+<head>
+    <meta charset="utf-8">
+    <title>{{template "title"}}</title>
 
-        <link rel="shortcut icon" href="images/favicon.ico" />
+    <meta name="description" content="Helping find homes for hogs in need">
+    <meta name="keywords"
+        content="hedgehog, rescue, african pygmy hedgehog, rehoming, club, uk, adoption, hedgehog rescue, african pygmy hedgehog rehoming, pygmy hedgehog rehoming, pygmy hedgehog rescue">
+    <meta name="google-site-verification" content="w-hHUHjE9Vz5RjBF8WJY3Burl3gg0HZcjjdaL3XZpfQ" />
 
-        <script src="/js/jquery.min.js" charset="utf-8"></script>
-        <script src="/js/promise.min.js" charset="utf-8"></script>
-        <script src="/js/fetch.min.js" charset="utf-8"></script>
-        <script src="/js/uikit.min.js" charset="utf-8"></script>
-        <!-- <script src="http://localhost:35732/livereload.js" charset="utf-8"></script> -->
-        {{block "scripts" .}}{{end}}
+    <link rel="shortcut icon" href="images/favicon.ico" />
 
-        <link rel="stylesheet" href="/css/uikit.almost-flat.min.css">
-        <link rel="stylesheet" href="/css/style.css">
-        {{block "styles" .}}{{end}}
+    <script src="/js/jquery.min.js" charset="utf-8"></script>
+    <script src="/js/promise.min.js" charset="utf-8"></script>
+    <script src="/js/fetch.min.js" charset="utf-8"></script>
+    <script src="/js/uikit.min.js" charset="utf-8"></script>
+    <!-- <script src="http://localhost:35732/livereload.js" charset="utf-8"></script> -->
+    {{block "scripts" .}}{{end}}
 
-    </head>
-    <body>
-        <div class="uk-width-1-1 {{block "color" .}}{{end}}" id="top">
-            <div class="uk-grid">
-                <div class="uk-width-1-10 uk-margin-large-right"></div>
-                <div class="uk-width-8-10 uk-grid">
-                    <div id="header" class="uk-width-1-1 uk-grid">
-                        <div class='uk-float-left uk-h4 uk-width-2-6'>
-                            Pygmy Hedgehog Rehoming
-                            <br />
-                            <form class="uk-margin-top uk-float-right" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                                <input type="hidden" name="cmd" value="_s-xclick">
-                                <input type="hidden" name="hosted_button_id" value="UC5C9H8HSVM5S">
-                                <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!" height="22">
-                                <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-                            </form>
+    <link rel="stylesheet" href="/css/uikit.almost-flat.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    {{block "styles" .}}{{end}}
 
-                        </div>
+</head>
 
-                        <div class="uk-width-4-6" id="nav">
-                            {{template "nav"}}
-                        </div>
-                        {{block "heading" .}}{{end}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<body>
+    <div class="uk-width-1-1 {{block " color" .}}{{end}}" id="top">
         <div class="uk-grid">
             <div class="uk-width-1-10 uk-margin-large-right"></div>
             <div class="uk-width-8-10 uk-grid">
-                <div id="page-content" class="uk-width-1-1 uk-grid">
-                    {{template "body"}}
+                <div id="header" class="uk-width-1-1 uk-grid">
+                    <div class='uk-float-left uk-h4 uk-width-2-6'>
+                        Pygmy Hedgehog Rehoming
+                        <br />
+                        <form class="uk-margin-top uk-float-right" action="https://www.paypal.com/donate" method="post"
+                            target="_top">
+                            <input type="hidden" name="hosted_button_id" value="3RJ3ZR7JMJAU2" />
+                            <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif"
+                                border="0" name="submit" title="PayPal - The safer, easier way to pay online!"
+                                alt="Donate with PayPal button" />
+                            <img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1"
+                                height="1" />
+                        </form>
+
+                    </div>
+
+                    <div class="uk-width-4-6" id="nav">
+                        {{template "nav"}}
+                    </div>
+                    {{block "heading" .}}{{end}}
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="uk-margin-top uk-grid uk-with-1-1 footer-background" id="footer">
-            <div class="uk-width-1-10 margin-large-right"></div>
-            <div class="uk-width-8-10" id="content">
-                <a class="uk-float-left" href="http://africanpygmyhedgehogclub.co.uk" target="_blank">African Pygmy Hedgehog Club</a>
-
-                <form class="uk-float-left" style="margin-left: 20%;" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                    <input type="hidden" name="cmd" value="_s-xclick">
-                    <input type="hidden" name="hosted_button_id" value="YF7R68PX955G8">
-                    <input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
-                    <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-                </form>
-
-                <a class="uk-float-right" href="http://hedgehogregistry.co.uk" target="_blank">Hedgehog Registry</a>
+    <div class="uk-grid">
+        <div class="uk-width-1-10 uk-margin-large-right"></div>
+        <div class="uk-width-8-10 uk-grid">
+            <div id="page-content" class="uk-width-1-1 uk-grid">
+                {{template "body"}}
             </div>
-    </body>
+        </div>
+    </div>
+
+    <div class="uk-margin-top uk-grid uk-with-1-1 footer-background" id="footer">
+        <div class="uk-width-1-10 margin-large-right"></div>
+        <div class="uk-width-8-10" id="content">
+            <a class="uk-float-left" href="http://africanpygmyhedgehogclub.co.uk" target="_blank">African Pygmy Hedgehog
+                Club</a>
+
+            <form class="uk-float-left" style="margin-left: 20%;" action="https://www.paypal.com/donate" method="post"
+                target="_top">
+                <input type="hidden" name="hosted_button_id" value="3RJ3ZR7JMJAU2" />
+                <input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" border="0"
+                    name="submit" title="PayPal - The safer, easier way to pay online!"
+                    alt="Donate with PayPal button" />
+                <img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1" />
+            </form>
+
+            <a class="uk-float-right" href="http://hedgehogregistry.co.uk" target="_blank">Hedgehog Registry</a>
+        </div>
+</body>
+
 </html>

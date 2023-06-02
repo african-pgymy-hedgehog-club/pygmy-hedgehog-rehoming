@@ -1,13 +1,14 @@
-FROM golang
+FROM golang:1.18
 
 WORKDIR /go/src/app
-
-# Get packages
-RUN go get -u github.com/sc7639/sendmail
 
 # Add files
 ADD template/ template/
 ADD *.go ./
+ADD go.* ./
+
+# Get packages
+RUN go get -u github.com/sc7639/sendmail
 
 # Build app and remove source files
 RUN go build && rm *.go
