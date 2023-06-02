@@ -9,7 +9,7 @@
 5. Run `docker compose -f dev.yml up --build`
 6. Open web browser to [http://localhost:8080/](http://localhost:8080/)
 
-## Build components for production and deploy
+## Deploy to production
 
 1. Commit changed to git
 2. Push files using `git push origin master`
